@@ -1,21 +1,24 @@
-import { RouteRecordRaw } from 'vue-router'
+import {RouteRecordRaw} from "vue-router";
+
 
 const modules = import.meta.globEager('./modules/**/*.ts')
 
-const routeModuleList: RouteRecordRaw[] = []
+const routeModuleList: RouteRecordRaw[] = [];
 
 Object.keys(modules).forEach((key: string) => {
-  const mod = modules[key].default || {}
-  const modList = Array.isArray(mod) ? [...mod] : [mod]
-  routeModuleList.push(...modList)
+  const mod = modules[key].default || {};
+  const modList = Array.isArray(mod) ? [...mod] : [mod];
+  routeModuleList.push(...modList);
 })
 
 const rootRoute: RouteRecordRaw = {
-  name: 'root',
+  name: 'login',
   path: '/',
-  component: () => import('@/views/hello.vue')
+  component: () => import('@/views/login/index.vue')
+  // component: () => import('@/views/home/index.vue')
 }
 
-const routes: RouteRecordRaw[] = [...routeModuleList, rootRoute]
+
+const routes: RouteRecordRaw[] = [rootRoute]
 
 export default routes

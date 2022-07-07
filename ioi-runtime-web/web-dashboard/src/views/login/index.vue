@@ -1,10 +1,45 @@
 <template>
-  <div>{{ hello }}</div>
+  <div class="login">
+    <n-card
+    >
+      <div :style="{ textAlign: 'center',fontSize: '50px'}">
+        <n-icon size="50px">
+          <teamOutlined/>
+        </n-icon>
+        ioi
+      </div>
+      <n-form>
+        <n-form-item path="username" label="username">
+          <n-input placeholder="username"></n-input>
+        </n-form-item>
+        <n-form-item path="password" label="password">
+          <n-input placeholder="password"></n-input>
+        </n-form-item>
+      </n-form>
+      <n-button type="info" :style="{ width: '100%' }">登陆</n-button>
+    </n-card>
+  </div>
+
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue'
-  const hello = ref('helloworld')
+import {NCard, NIcon, NForm, NFormItem, NInput, NButton} from 'naive-ui'
+import { TeamOutlined} from '@vicons/antd'
+
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.login {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0098e1;
+}
+
+.n-card {
+  max-width: 400px;
+}
+
+</style>
