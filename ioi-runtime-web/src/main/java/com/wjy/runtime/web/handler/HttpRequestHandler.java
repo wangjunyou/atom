@@ -6,6 +6,8 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
 import io.netty.handler.codec.http.multipart.*;
 import io.netty.util.ReferenceCountUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,8 @@ import java.util.UUID;
 
 
 public class HttpRequestHandler extends SimpleChannelInboundHandler<HttpObject> {
+
+    private static final Logger LOG = LoggerFactory.getLogger(HttpRequestHandler.class);
 
     private static final HttpDataFactory DATA_FACTORY = new DefaultHttpDataFactory(true);
 
