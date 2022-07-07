@@ -98,7 +98,6 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<HttpObject> 
                     ctx.fireChannelRead(ReferenceCountUtil.retain(chunk));
                 }
             } else {
-                System.out.println("dddddddd");
                 ctx.fireChannelRead(ReferenceCountUtil.retain(msg));
             }
         } catch (Throwable t) {

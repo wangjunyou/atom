@@ -7,6 +7,6 @@
 </template>
 
 <script lang="ts" setup>
-  import { NConfigProvider, NMessageProvider } from 'naive-ui'
-  // import { RouterView } from 'vue-router'
+import {NConfigProvider, NMessageProvider} from 'naive-ui'
+import {RouterView} from 'vue-router'
 </script>

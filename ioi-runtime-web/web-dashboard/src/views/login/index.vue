@@ -16,7 +16,7 @@
           <n-input placeholder="password"></n-input>
         </n-form-item>
       </n-form>
-      <n-button type="info" :style="{ width: '100%' }">登陆</n-button>
+      <n-button type="info" :style="{ width: '100%' }" @click="loginInfo">登陆</n-button>
     </n-card>
   </div>
 
@@ -25,6 +25,19 @@
 <script lang="ts" setup>
 import {NCard, NIcon, NForm, NFormItem, NInput, NButton} from 'naive-ui'
 import { TeamOutlined} from '@vicons/antd'
+import { login } from '@/service/modules/login'
+import { LoginReq } from '@/service/modules/login/types'
+
+function loginInfo() {
+  let loginReq: LoginReq = {
+    userName: 'zhangsan',
+    userPassword: 'admin'
+  }
+  let result = login(loginReq)
+  console.log(result)
+  // let req: AxiosResponse = login(loginReq)
+  // console.log(req.data)
+}
 
 </script>
 
