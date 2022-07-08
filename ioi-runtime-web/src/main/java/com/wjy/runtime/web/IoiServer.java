@@ -1,6 +1,7 @@
 package com.wjy.runtime.web;
 
-import com.wjy.runtime.web.handler.HttpRequestHandler;
+import com.wjy.runtime.web.handler.HttpFileUploadHandler;
+import com.wjy.runtime.web.handler.HttpStaticServerHandler;
 import com.wjy.runtime.web.handler.MessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -11,8 +12,7 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.cors.CorsConfigBuilder;
 import io.netty.handler.codec.http.cors.CorsHandler;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.stream.ChunkedWriteHandler;
 
 import java.io.File;
 
@@ -28,12 +28,12 @@ public class IoiServer {
             @Override
             protected void initChannel(SocketChannel socketChannel) throws Exception {
                 socketChannel.pipeline()
-//                        .addLast(new LoggingHandler(LogLevel.INFO))
                         .addLast(new HttpServerCodec())
                         .addLast(new CorsHandler(CorsConfigBuilder.forAnyOrigin().allowNullOrigin().allowCredentials().build()))
-                        .addLast(new HttpRequestHandler(new File("/tmp")))
+                        .addLast(new HttpStaticServerHandler(new File("/tmp")))
+                        .addLast(new HttpFileUploadHandler(new File("/tmp")))
                         .addLast(new HttpObjectAggregator(65536))
-//                        .addLast(new ChunkedWriteHandler())
+                        .addLast(new ChunkedWriteHandler())
                         .addLast(new MessageHandler());
             }
         });

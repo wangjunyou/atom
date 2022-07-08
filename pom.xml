@@ -24,6 +24,7 @@ under the License.
     <artifactId>ioi-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
+        <module>ioi-core</module>
         <module>ioi-runtime-web</module>
     </modules>
 
@@ -72,6 +73,18 @@ under the License.
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
+            </dependency>
+            <!--guava-->
+            <dependency>
+                <groupId>com.google.inject</groupId>
+                <artifactId>guice</artifactId>
+                <version>5.0.1</version>
+            </dependency>
+            <!--reflections-->
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>0.10.2</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

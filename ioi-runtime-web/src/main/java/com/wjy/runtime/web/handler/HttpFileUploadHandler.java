@@ -14,10 +14,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
+/**
+ * 文件上传临时存储服务
+ * */
+public class HttpFileUploadHandler extends SimpleChannelInboundHandler<HttpObject> {
 
-public class HttpRequestHandler extends SimpleChannelInboundHandler<HttpObject> {
-
-    private static final Logger LOG = LoggerFactory.getLogger(HttpRequestHandler.class);
+    private static final Logger LOG = LoggerFactory.getLogger(HttpFileUploadHandler.class);
 
     private static final HttpDataFactory DATA_FACTORY = new DefaultHttpDataFactory(true);
 
@@ -28,7 +30,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<HttpObject> 
     private HttpRequest currentRequest;
     private String currentRequestPath;
 
-    public HttpRequestHandler(File tmpDir) {
+    public HttpFileUploadHandler(File tmpDir) {
         this.tmpDir = tmpDir;
     }
 
@@ -63,9 +65,8 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<HttpObject> 
                 HttpContent chunk = (HttpContent) msg;
                 currentDecoder.offer(chunk);
 
-                QueryStringEncoder encoder = new QueryStringEncoder(currentRequestPath);
+                HttpPostRequestEncoder encoder = new HttpPostRequestEncoder(DATA_FACTORY,currentRequest,false);
                 try {
-//                    HttpPostRequestEncoder encoder = new HttpPostRequestEncoder(DATA_FACTORY,currentRequest,false);
                     while (currentDecoder.hasNext()) {
                         InterfaceHttpData data = currentDecoder.next();
 
@@ -78,19 +79,18 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<HttpObject> 
                                     tmpDir.mkdirs();
                                 }
                                 file.renameTo(target);
-                                encoder.addParam(file.getName() + "_filepath", target.getAbsolutePath());
-                                encoder.addParam(file.getName(), name);
+                                encoder.addBodyAttribute(file.getName() + "_filepath", target.getAbsolutePath());
+                                encoder.addBodyAttribute(file.getName(), name);
 
                             }
                         } else if (data.getHttpDataType() == InterfaceHttpData.HttpDataType.Attribute) {
                             DiskAttribute attr = (DiskAttribute) data;
-                            encoder.addParam(attr.getName(), attr.getValue());
+                            encoder.addBodyAttribute(attr.getName(), attr.getValue());
                         }
                     }
                 } catch (HttpPostRequestDecoder.EndOfDataDecoderException ignored) {
                 }
-                currentRequest.setUri(encoder.toString());
-
+                currentRequest = encoder.finalizeRequest();
                 if (chunk instanceof LastHttpContent) {
                     HttpRequest request = currentRequest;
                     currentRequest = null;
@@ -99,7 +99,6 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<HttpObject> 
                     currentDecoder.destroy();
                     currentDecoder = null;
                     ctx.fireChannelRead(request);
-                    ctx.fireChannelRead(ReferenceCountUtil.retain(chunk));
                 }
             } else {
                 ctx.fireChannelRead(ReferenceCountUtil.retain(msg));

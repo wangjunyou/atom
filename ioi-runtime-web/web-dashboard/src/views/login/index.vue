@@ -27,6 +27,7 @@ import {NCard, NIcon, NForm, NFormItem, NInput, NButton} from 'naive-ui'
 import { TeamOutlined} from '@vicons/antd'
 import { login } from '@/service/modules/login'
 import { LoginReq } from '@/service/modules/login/types'
+import router from "../../router";
 
 function loginInfo() {
   let loginReq: LoginReq = {
@@ -35,6 +36,7 @@ function loginInfo() {
   }
   let result = login(loginReq)
   console.log(result)
+  router.push({ name: 'home'})
   // let req: AxiosResponse = login(loginReq)
   // console.log(req.data)
 }
