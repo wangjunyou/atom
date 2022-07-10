@@ -1,8 +1,8 @@
-package com.wjy.runtime.web;
+package com.wjy.ioi.runtime.web;
 
-import com.wjy.runtime.web.handler.HttpFileUploadHandler;
-import com.wjy.runtime.web.handler.HttpStaticServerHandler;
-import com.wjy.runtime.web.handler.MessageHandler;
+import com.wjy.ioi.runtime.web.handler.HttpFileUploadHandler;
+import com.wjy.ioi.runtime.web.handler.HttpStaticServerHandler;
+import com.wjy.ioi.runtime.web.handler.MessageHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -30,7 +30,7 @@ public class IoiServer {
                 socketChannel.pipeline()
                         .addLast(new HttpServerCodec())
                         .addLast(new CorsHandler(CorsConfigBuilder.forAnyOrigin().allowNullOrigin().allowCredentials().build()))
-                        .addLast(new HttpStaticServerHandler(new File("/tmp")))
+                        .addLast(new HttpStaticServerHandler(new File("/tmp/web")))
                         .addLast(new HttpFileUploadHandler(new File("/tmp")))
                         .addLast(new HttpObjectAggregator(65536))
                         .addLast(new ChunkedWriteHandler())

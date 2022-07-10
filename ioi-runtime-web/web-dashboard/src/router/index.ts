@@ -1,9 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHashHistory, createWebHistory} from 'vue-router'
 import routes from './routers'
 
 //创建router
 const router = createRouter({
-  history: createWebHistory(''),
+  history: createWebHashHistory(''),
   strict: true,
   routes
 })

@@ -1,6 +1,6 @@
-package com.wjy.runtime.web.handler;
+package com.wjy.ioi.runtime.web.handler;
 
-import com.wjy.runtime.web.handler.util.MimeTypes;
+import com.wjy.ioi.runtime.web.handler.util.MimeTypes;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -38,7 +38,7 @@ public class HttpStaticServerHandler extends SimpleChannelInboundHandler<HttpObj
                 QueryStringDecoder decoder = new QueryStringDecoder(currentRequest.uri());
                 String requestPath = decoder.path();
                 respondWithFile(ctx, currentRequest, requestPath);
-            }else {
+            } else {
                 ctx.fireChannelRead(currentRequest);
             }
         } else {
@@ -46,6 +46,7 @@ public class HttpStaticServerHandler extends SimpleChannelInboundHandler<HttpObj
         }
     }
 
+    /* 本方法未包括cache,后期添加压缩算法 */
     public void respondWithFile(ChannelHandlerContext ctx, HttpRequest request, String requestPath) {
         if (requestPath.endsWith("/")) {
             requestPath += "index.html";
@@ -53,7 +54,7 @@ public class HttpStaticServerHandler extends SimpleChannelInboundHandler<HttpObj
 
         ClassLoader classLoader = HttpStaticServerHandler.class.getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream("web" + requestPath);
-        if(inputStream == null){
+        if (inputStream == null) {
             ctx.fireChannelRead(request);
             return;
         }
@@ -66,7 +67,7 @@ public class HttpStaticServerHandler extends SimpleChannelInboundHandler<HttpObj
         mimeType = mimeType == null ? MimeTypes.getDefaultMimeType() : mimeType;
         headers.set(HttpHeaderNames.CONTENT_TYPE, mimeType);
 
-        if (HttpHeaders.isKeepAlive(request)) {
+        if (HttpUtil.isKeepAlive(request)) {
             headers.set(HttpHeaderNames.CONNECTION, HttpHeaderValues.KEEP_ALIVE);
         }
 
@@ -80,6 +81,7 @@ public class HttpStaticServerHandler extends SimpleChannelInboundHandler<HttpObj
         }
 
         ChannelFuture channelFuture = ctx.writeAndFlush(response);
-        channelFuture.addListener(ChannelFutureListener.CLOSE);
+        if (!HttpUtil.isKeepAlive(request))
+            channelFuture.addListener(ChannelFutureListener.CLOSE);
     }
 }

@@ -1,7 +1,6 @@
-package com.wjy.runtime.web.handler.util;
+package com.wjy.ioi.runtime.web.handler.util;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 /**

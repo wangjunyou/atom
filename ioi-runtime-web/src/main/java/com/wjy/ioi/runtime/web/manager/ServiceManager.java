@@ -1,4 +1,4 @@
-package com.wjy.runtime.web.manager;
+package com.wjy.ioi.runtime.web.manager;
 
 public class ServiceManager {
 
