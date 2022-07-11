@@ -26,13 +26,23 @@
 import {NCard, NIcon, NForm, NFormItem, NInput, NButton} from 'naive-ui'
 import { TeamOutlined} from '@vicons/antd'
 import { login } from '@/service/modules/login'
-import { LoginReq } from '@/service/modules/login/types'
+import {GenericReq, LoginReq, SessionIdRes} from '@/service/modules/login/types'
 import router from "../../router";
 
 function loginInfo() {
+  let sessionIdRes: SessionIdRes ={
+    sessionId: '234sadfas4325dsfaf'
+  }
+
+  let genericReq: GenericReq ={
+    phone: 1234565768,
+    maill: 'xxxxx@163.com',
+    sessionIdRes: sessionIdRes
+  }
   let loginReq: LoginReq = {
     userName: 'zhangsan',
-    userPassword: 'admin'
+    userPassword: 'admin',
+    genericReq: genericReq
   }
   let result = login(loginReq)
   console.log(result)

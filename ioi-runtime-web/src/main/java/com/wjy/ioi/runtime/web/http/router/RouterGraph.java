@@ -67,9 +67,9 @@ public class RouterGraph {
     }
 
     /* 两种解析方式:[/ioi/examples, /ioi/examples/:wjy],目前版本支持第一种解析方式 */
-    public RouterMapping getMapping(String path) {
-        int indexOf = path.indexOf(this.pathPattern);
-        final String mapping = path.substring(indexOf + this.pathPattern.length());
+    public RouterMapping getMapping(String mapping) {
+//        int indexOf = path.indexOf(this.pathPattern);
+//        final String mapping = path.substring(indexOf + this.pathPattern.length());
         List<RouterMapping> mappings = routerMappings.stream().filter(ms -> ms.getMapping().equals(mapping)).collect(Collectors.toList());
         return (mappings != null && !mappings.isEmpty()) ? mappings.get(0) : null;
     }

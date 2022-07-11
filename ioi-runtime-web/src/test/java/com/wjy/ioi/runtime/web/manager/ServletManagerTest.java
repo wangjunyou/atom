@@ -7,15 +7,15 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class ServerletManagerTest {
+public class ServletManagerTest {
 
     @Test
     public void forPackage() {
-        ServerletManager serverletManager = new ServerletManager();
-        serverletManager.forPackages("com.wjy.ioi.runtime.web.http.*");
-        RouterGraph routerGraph = serverletManager.router("/login/delete");
+        ServletManager servletManager = new ServletManager();
+        servletManager.forPackages("com.wjy.ioi.runtime.web.http.*");
+        RouterGraph routerGraph = servletManager.router("/login/delete");
         List<RouterMapping> routerMappings = routerGraph.getRouterMappings();
-        RouterMapping mapping = routerGraph.getMapping("/login/delete");
+        RouterMapping mapping = routerGraph.getMapping("/delete");
         System.out.println(mapping.getMethod().getName());
         RouterParameter[] parameters = mapping.getParameters();
         for (RouterParameter parameter : parameters) {

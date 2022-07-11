@@ -24,9 +24,9 @@ import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 
-public class ServerletManager {
+public class ServletManager {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ServerletManager.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ServletManager.class);
 
     private static final String DEFAULT_PACKAGE = "com.wjy.ioi";
 
@@ -43,17 +43,21 @@ public class ServerletManager {
     }
 
     public void forPackages(String includePackage) {
-        forPackages(includePackage, null, ServerletManager.class.getClassLoader());
+        forPackages(includePackage, null, ServletManager.class.getClassLoader());
     }
 
     public void forPackages(String includePackage, String excludePackage, ClassLoader classLoader) {
+        forPackages(null, includePackage, excludePackage, classLoader);
+    }
+
+    public void forPackages(String defaultPackage, String includePackage, String excludePackage, ClassLoader classLoader) {
         FilterBuilder filter = new FilterBuilder();
         filter.includePackage(includePackage);
         if (excludePackage != null && ("").equals(excludePackage))
             filter.excludePackage(excludePackage);
 
         ConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
-                .forPackages(DEFAULT_PACKAGE)
+                .forPackages(defaultPackage == null ? DEFAULT_PACKAGE : defaultPackage)
                 .addClassLoaders(classLoader)
                 .filterInputsBy(filter);
 

@@ -1,5 +1,6 @@
 package com.wjy.ioi.runtime.web.handler;
 
+import com.google.common.io.ByteStreams;
 import com.wjy.ioi.runtime.web.handler.util.MimeTypes;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 
 
 /**
@@ -72,7 +74,7 @@ public class HttpStaticServerHandler extends SimpleChannelInboundHandler<HttpObj
         }
 
         try {
-            byte[] datas = inputStream.readAllBytes();
+            byte[] datas = ByteStreams.toByteArray(inputStream);
             response.content().writeBytes(datas);
             headers.set(HttpHeaderNames.CONTENT_LENGTH, datas.length);
         } catch (IOException e) {
