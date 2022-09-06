@@ -1,7 +1,6 @@
 package com.wjy.http.netty.handler;
 
 import com.google.common.io.ByteStreams;
-import com.google.common.io.CharStreams;
 import com.wjy.api.common.cache.DefaultCache;
 import com.wjy.api.common.cache.KeyEntry;
 import com.wjy.http.netty.util.HandlerUtils;
@@ -9,6 +8,7 @@ import com.wjy.http.netty.util.MimeTypes;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.*;
+import io.netty.util.AsciiString;
 import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,11 +55,11 @@ public class StaticFileHandler extends SimpleChannelInboundHandler<HttpObject> {
                     String path = qsd.path();
                     final String filePath = path.endsWith("/") ? path + "index.html" : path;
                     HttpResponseStatus respStatus = HttpResponseStatus.OK;
-                    Map<String, String> headers = new HashMap<>();
+                    Map<AsciiString, AsciiString> headers = new HashMap<>();
 
-                    byte[] sfd = getStaticFile(path);
+                    byte[] sfd = getStaticFile(filePath);
 
-                    KeyEntry<String> entry = tempFileCache.getKeyEntry(path);
+                    KeyEntry<String> entry = tempFileCache.getKeyEntry(filePath);
                     boolean cache = cacheValidation(ctx, entry);
                     if (cache) return;
 
@@ -70,12 +70,12 @@ public class StaticFileHandler extends SimpleChannelInboundHandler<HttpObject> {
                         String fileName = filePath.substring(filePath.lastIndexOf("/") + 1);
                         String mimeType = MimeTypes.getMimeTypeForFileName(fileName);
                         mimeType = mimeType == null ? MimeTypes.getDefaultMimeType() : mimeType;
-                        headers.put(HttpHeaderNames.CONTENT_TYPE.toString(), mimeType);
+                        headers.put(HttpHeaderNames.CONTENT_TYPE, AsciiString.of(mimeType));
 
                         setDateAndCacheHeaders(response, entry);
 
                         if (headers != null)
-                            for (Map.Entry<String, String> header : headers.entrySet()) {
+                            for (Map.Entry<AsciiString, AsciiString> header : headers.entrySet()) {
                                 response.headers().set(header.getKey(), header.getValue());
                             }
 
@@ -87,7 +87,7 @@ public class StaticFileHandler extends SimpleChannelInboundHandler<HttpObject> {
                     } else {
 
                         respStatus = HttpResponseStatus.NOT_FOUND;
-                        headers.put(HttpHeaderNames.CONTENT_TYPE.toString(), HttpHeaderValues.TEXT_PLAIN.toString());
+                        headers.put(HttpHeaderNames.CONTENT_TYPE, HttpHeaderValues.TEXT_PLAIN);
                         HandlerUtils.sendResponse(ctx, keepAlive, "Not Found.", respStatus, headers);
 
                     }
