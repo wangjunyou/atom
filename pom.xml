@@ -26,6 +26,8 @@ under the License.
     <modules>
         <module>ioi-core</module>
         <module>ioi-runtime-web</module>
+        <module>ioi-remote</module>
+        <module>ioi-http</module>
     </modules>
 
     <name>ioi :</name>
@@ -42,14 +44,18 @@ under the License.
 
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <netty.version>4.1.78.Final</netty.version>
         <junit5.version>5.8.2</junit5.version>
         <log4j.version>2.18.0</log4j.version>
         <javassist.version>3.28.0-GA</javassist.version>
+        <guice.version>5.0.1</guice.version>
         <reflections.version>0.10.2</reflections.version>
         <guava.version>31.1-jre</guava.version>
+        <protostuff.version>1.8.0</protostuff.version>
+        <lombok.version>1.18.22</lombok.version>
+        <jackson.version>2.13.3</jackson.version>
     </properties>
 
     <dependencies>
@@ -110,18 +116,19 @@ under the License.
                 <artifactId>javassist</artifactId>
                 <version>${javassist.version}</version>
             </dependency>
+            <!-- netty -->
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
             </dependency>
             <!--guava-->
-            <!--<dependency>
+            <dependency>
                 <groupId>com.google.inject</groupId>
                 <artifactId>guice</artifactId>
-                <version>5.0.1</version>
-            </dependency>-->
-            <!--reflections-->
+                <version>${guice.version}</version>
+            </dependency>
+            <!-- reflections -->
             <dependency>
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>
@@ -137,10 +144,38 @@ under the License.
                     </exclusion>
                 </exclusions>
             </dependency>
+            <!-- guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+            <!-- protostuff -->
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-core</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-runtime</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+            <!-- lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
