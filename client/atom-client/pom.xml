@@ -3,22 +3,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>ioi-parent</artifactId>
-        <groupId>com.wjy.ioi</groupId>
+        <artifactId>atom-parent</artifactId>
+        <groupId>com.wjy.atom</groupId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ioi-client</artifactId>
+    <artifactId>atom-client</artifactId>
 
-    <name>ioi : client</name>
+    <name>atom : client</name>
     <packaging>jar</packaging>
-
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
 </project>

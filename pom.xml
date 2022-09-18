@@ -20,21 +20,21 @@ under the License.
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.wjy.ioi</groupId>
-    <artifactId>ioi-parent</artifactId>
+    <groupId>com.wjy.atom</groupId>
+    <artifactId>atom-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>libs/ioi-core</module>
-        <module>libs/ioi-remote</module>
-        <module>libs/ioi-http</module>
-        <module>libs/ioi-config</module>
+        <module>libs/atom-core</module>
+        <module>libs/atom-remote</module>
+        <module>libs/atom-http</module>
+        <module>libs/atom-config</module>
         <module>ui</module>
-        <module>server/ioi-server</module>
-        <module>server/ioi-dist</module>
-        <module>client/ioi-client</module>
+        <module>server/atom-server</module>
+        <module>server/atom-dist</module>
+        <module>client/atom-client</module>
     </modules>
 
-    <name>ioi :</name>
+    <name>atom :</name>
     <packaging>pom</packaging>
     <inceptionYear>2022</inceptionYear>
 
