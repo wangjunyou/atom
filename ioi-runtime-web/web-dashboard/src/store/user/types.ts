@@ -1,3 +1,0 @@
-interface UserState {
-  sessionId: string
-}
