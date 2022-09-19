@@ -15,6 +15,18 @@
     <packaging>jar</packaging>
 
     <build>
+        <resources>
+            <resource>
+                <!-- Only include the web folder from the web-dashboard directory -->
+                <directory>./</directory>
+                <includes>
+                    <include>web/**</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>com.github.eirslett</groupId>
@@ -52,7 +64,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <workingDirectory>web-dashboard</workingDirectory>
+                    <workingDirectory>web</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>

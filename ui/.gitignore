@@ -26,5 +26,7 @@ node
 node_modules
 dist
 dist-ssr
+web
+web-dashboard
 
 .pnpm-debug.log
