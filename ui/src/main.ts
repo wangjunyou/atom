@@ -3,6 +3,7 @@ import App from './App'
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import * as echarts from 'echarts'
+import router from '@/router'
 // import i18n from "@/locales"
 
 const app = createApp(App)
@@ -12,6 +13,7 @@ pinia.use(piniaPluginPersistedstate)
 
 app.config.globalProperties.echarts = echarts
 
+app.use(router)
 app.use(pinia)
 // views.use(i18n)
-app.mount('#views')
+app.mount('#app')

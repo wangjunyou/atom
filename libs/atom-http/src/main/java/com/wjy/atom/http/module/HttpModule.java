@@ -1,9 +1,9 @@
-package com.wjy.http.module;
+package com.wjy.atom.http.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Scopes;
 import com.wjy.atom.core.finder.PackageFinder;
-import com.wjy.http.HttpServer;
+import com.wjy.atom.http.HttpServer;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 import org.glassfish.jersey.server.ResourceConfig;
 

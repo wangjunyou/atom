@@ -1,7 +1,7 @@
-import mapping from "@/utils/mapping";
+import mapping from '@/utils/mapping'
 
 const utils = {
-    mapping
+  mapping
 }
 
 export default utils

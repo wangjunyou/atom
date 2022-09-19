@@ -1,4 +1,4 @@
-package com.wjy.http;
+package com.wjy.atom.http;
 
 import com.google.common.net.InetAddresses;
 import io.netty.channel.Channel;
@@ -38,6 +38,9 @@ public class HttpServer {
         this.config = config;
     }
 
+    public void start() {
+        start(IpProtocol.IPV4);
+    }
     public void start(IpProtocol protocol) {
 
         LOG.info("HttpServer start.");

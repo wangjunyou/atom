@@ -1,7 +1,14 @@
-import {createRouter, createWebHistory} from "vue-router";
+import {
+    createRouter,
+    createWebHistory,
+    NavigationGuardNext,
+    RouteLocationNormalized
+} from 'vue-router'
 
-/*
-import routes from "./routes";
+import routes from './routes'
+
+// import NProgress from 'nprogress'
+// import 'nprogress/nprogress.css'
 
 const router = createRouter({
     history: createWebHistory(
@@ -10,4 +17,15 @@ const router = createRouter({
     routes
 })
 
-export default router*/
+router.beforeEach(
+    async (
+        to: RouteLocationNormalized,
+        from: RouteLocationNormalized,
+        next: NavigationGuardNext
+    ) => {
+        // NProgress.start()
+
+    }
+)
+
+export default router

@@ -2,7 +2,7 @@ import {defineConfig} from "vite"
 import vue from "@vitejs/plugin-vue"
 import vueJsx from "@vitejs/plugin-vue-jsx"
 import viteCompression from "vite-plugin-compression"
-import * as path from "path"
+import path from "path"
 
 export default defineConfig({
     base: "/",
