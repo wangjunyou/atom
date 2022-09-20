@@ -21,7 +21,7 @@ import java.security.cert.CertificateException;
 
 /**
  * http服务器
- * */
+ */
 public class HttpServer {
 
     private static final Logger LOG = LoggerFactory.getLogger(HttpServer.class);
@@ -38,9 +38,14 @@ public class HttpServer {
         this.config = config;
     }
 
+    public ResourceConfig getConfig() {
+        return config;
+    }
+
     public void start() {
         start(IpProtocol.IPV4);
     }
+
     public void start(IpProtocol protocol) {
 
         LOG.info("HttpServer start.");

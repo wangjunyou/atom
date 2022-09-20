@@ -20,7 +20,7 @@
                 <!-- Only include the web folder from the web-dashboard directory -->
                 <directory>./</directory>
                 <includes>
-                    <include>web/**</include>
+                    <include>web-dashboard/**</include>
                 </includes>
             </resource>
             <resource>
@@ -64,7 +64,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <workingDirectory>web</workingDirectory>
+                    <workingDirectory>node</workingDirectory>
                 </configuration>
             </plugin>
         </plugins>

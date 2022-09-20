@@ -32,6 +32,7 @@ under the License.
         <module>server/atom-server</module>
         <module>server/atom-dist</module>
         <module>client/atom-client</module>
+        <module>libs/atom-http2</module>
     </modules>
 
     <name>atom :</name>

@@ -25,6 +25,7 @@ router.beforeEach(
     ) => {
         // NProgress.start()
 
+
     }
 )
 

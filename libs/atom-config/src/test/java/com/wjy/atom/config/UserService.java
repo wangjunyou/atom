@@ -6,23 +6,29 @@ import javax.inject.Inject;
 
 public class UserService {
 
-    private User user;
-
+    @Inject
+    @Config("atom.string")
     private String string;
-
+    @Inject
+    @Config("atom.char")
     private char aChar;
-
+    @Inject
+    @Config("atom.double")
     private double aDouble;
-
+    @Inject
+    @Config("atom.float")
     private float aFloat;
-
+    @Inject
+    @Config("atom.boolean")
     private boolean aBoolean;
-
+    @Inject
+    @Config("atom.byte")
     private byte aByte;
-
+    @Inject
+    @Config("atom.long")
     private long aLong;
 
-    @Inject
+    /*@Inject
     public UserService(
             @Config("atom.string") String string,
             @Config("atom.char") char aChar,
@@ -39,7 +45,7 @@ public class UserService {
         this.aBoolean = aBoolean;
         this.aByte = aByte;
         this.aLong = aLong;
-    }
+    }*/
 
     @Override
     public String toString() {

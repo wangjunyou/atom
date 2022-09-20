@@ -24,6 +24,6 @@ export default defineConfig({
         }
     },
     build: {
-        outDir: path.resolve("web")
+        outDir: path.resolve("web-dashboard")
     }
 })

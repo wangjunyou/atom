@@ -15,5 +15,25 @@
     <name>atom : server</name>
     <packaging>jar</packaging>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.wjy.atom</groupId>
+            <artifactId>atom-http</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wjy.atom</groupId>
+            <artifactId>atom-config</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wjy.atom</groupId>
+            <artifactId>atom-ui</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 </project>
