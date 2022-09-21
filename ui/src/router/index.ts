@@ -12,12 +12,12 @@ import routes from './routes'
 
 const router = createRouter({
     history: createWebHistory(
-        import.meta.env.MODE === 'production' ? 'ioi/ui' : '/'
+        import.meta.env.MODE === 'production' ? 'atom/ui' : '/'
     ),
     routes
 })
 
-router.beforeEach(
+/*router.beforeEach(
     async (
         to: RouteLocationNormalized,
         from: RouteLocationNormalized,
@@ -27,6 +27,6 @@ router.beforeEach(
 
 
     }
-)
+)*/
 
 export default router

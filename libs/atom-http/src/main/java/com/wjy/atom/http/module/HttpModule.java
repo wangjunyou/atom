@@ -1,19 +1,19 @@
 package com.wjy.atom.http.module;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Scopes;
 import com.wjy.atom.core.finder.PackageFinder;
 import com.wjy.atom.http.HttpServer;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
-import org.glassfish.jersey.server.ResourceConfig;
+import org.jboss.resteasy.plugins.guice.ext.JaxrsModule;
+import org.jboss.resteasy.plugins.guice.ext.RequestScopeModule;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.Path;
 import java.util.Set;
 
-/**
- * http module注册类
- * */
 public class HttpModule extends AbstractModule {
+
+    private static final Logger LOG = LoggerFactory.getLogger(HttpModule.class);
 
     private String pkg;
 
@@ -23,12 +23,16 @@ public class HttpModule extends AbstractModule {
 
     @Override
     protected void configure() {
-        PackageFinder finder = new PackageFinder()
-                .toPackage(pkg);
-        Set<Class<?>> resources = finder.getTypesAnnotatedWith(Path.class);
-        ResourceConfig config = new ResourceConfig(resources);
-        config.register(MultiPartFeature.class);
-        bind(ResourceConfig.class).toInstance(config);
-        bind(HttpServer.class).in(Scopes.SINGLETON);
+
+        LOG.info("Http module load.");
+
+        install(new JaxrsModule());
+        install(new RequestScopeModule());
+        Set<Class<?>> classes = new PackageFinder()
+                .toPackage(pkg)
+                .getTypesAnnotatedWith(Path.class);
+        classes.forEach(clazz -> bind(clazz));
+        bind(HttpServer.class);
+
     }
 }

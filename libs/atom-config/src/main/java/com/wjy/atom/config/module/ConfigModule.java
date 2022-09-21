@@ -2,14 +2,21 @@ package com.wjy.atom.config.module;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
+import com.google.inject.Key;
 import com.google.inject.binder.ConstantBindingBuilder;
+import com.google.inject.binder.LinkedBindingBuilder;
 import com.wjy.atom.config.AtomConfig;
 import com.wjy.atom.config.annotation.ConfigImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 public class ConfigModule extends AbstractModule {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ConfigModule.class);
 
     private final AtomConfig config;
 
@@ -23,6 +30,9 @@ public class ConfigModule extends AbstractModule {
 
     @Override
     protected void configure() {
+
+        LOG.info("Config module load.");
+
         Map<String, Object> datas = config.toMap();
         datas.forEach((k, v) -> {
             ConstantBindingBuilder bindingBuilder = bindConstant().annotatedWith(new ConfigImpl(k));

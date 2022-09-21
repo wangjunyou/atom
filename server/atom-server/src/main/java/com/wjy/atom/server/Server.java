@@ -5,7 +5,6 @@ import com.google.inject.Injector;
 import com.wjy.atom.config.module.ConfigModule;
 import com.wjy.atom.http.HttpServer;
 import com.wjy.atom.http.module.HttpModule;
-import org.glassfish.jersey.server.ResourceConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,18 +28,21 @@ public class Server {
         }
 
         Injector injector = Guice.createInjector(
-                new HttpModule("com.wjy.atom"),
-                new ConfigModule(props)
+                new ConfigModule(props),
+                new HttpModule("com.wjy.atom")
         );
 
         try {
             HttpServer httpServer = injector.getInstance(HttpServer.class);
-            ResourceConfig config = httpServer.getConfig();
-            httpServer.start();
-            Thread.sleep(10000000);
-//            Thread.currentThread().join();
-        } catch (InterruptedException e) {
-            LOG.error("Atom httpServer start failed. {}", e);
+            httpServer
+                    .initInjector(injector)
+                    .start();
+
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                httpServer.stop();
+            }));
+        } catch (Exception e) {
+            LOG.error("Atom httpServer run failed. {}", e);
             System.exit(-1);
         }
     }

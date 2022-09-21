@@ -4,15 +4,17 @@ import com.wjy.atom.config.annotation.Config;
 import com.wjy.atom.server.model.UserInfo;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("atom/api")
+@Singleton
+@Path("api")
 public class LoginResources {
 
     @POST
-    @Path("xxx")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path("login")
+    @Produces(MediaType.TEXT_PLAIN)
     public UserInfo login(@FormParam("username") String username, @FormParam("password") String password) {
         UserInfo userInfo = new UserInfo(username, password, "xxxxx@xx.com");
         System.out.println(userInfo.toString());

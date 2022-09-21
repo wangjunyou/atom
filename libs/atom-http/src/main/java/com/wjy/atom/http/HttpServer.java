@@ -1,56 +1,53 @@
 package com.wjy.atom.http;
 
 import com.google.common.net.InetAddresses;
-import io.netty.channel.Channel;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import io.netty.handler.ssl.util.SelfSignedCertificate;
-import org.glassfish.jersey.netty.httpserver.NettyHttpContainerProvider;
-import org.glassfish.jersey.server.ResourceConfig;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.wjy.atom.config.annotation.Config;
+import org.jboss.resteasy.plugins.guice.ModuleProcessor;
+import org.jboss.resteasy.plugins.server.netty.NettyJaxrsServer;
+import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import javax.net.ssl.SSLException;
 import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.URI;
-import java.security.cert.CertificateException;
 
-
-/**
- * http服务器
- */
 public class HttpServer {
 
     private static final Logger LOG = LoggerFactory.getLogger(HttpServer.class);
 
     private static final boolean SSL = System.getProperty("ssl") != null;
-    private static final int DEFAULT_PORT = 12345;
     private static final Inet4Address DEFAULT_IPV4 = InetAddresses.fromIPv4BigInteger(BigInteger.ZERO);
     private static final Inet6Address DEFAULT_IPV6 = InetAddresses.fromIPv6BigInteger(BigInteger.ZERO);
-    private ResourceConfig config;
-    private Channel serverChannel;
 
     @Inject
-    public HttpServer(ResourceConfig config) {
-        this.config = config;
-    }
+    @Config("atom.http.port")
+    private String httpPort;
 
-    public ResourceConfig getConfig() {
-        return config;
-    }
+    @Inject
+    @Config("atom.root_path")
+    private String rootPath;
+
+    private NettyJaxrsServer server;
+    private Injector injector;
 
     public void start() {
         start(IpProtocol.IPV4);
+    }
+
+    public HttpServer initInjector(Injector injector) {
+        this.injector = injector;
+        return this;
     }
 
     public void start(IpProtocol protocol) {
 
         LOG.info("HttpServer start.");
 
-        String httpFormat = "http://%s:" + DEFAULT_PORT + "/";
+        String httpFormat = "http://%s:" + httpPort + rootPath;
         switch (protocol) {
             case IPV4:
                 String ipv4HostAddress = DEFAULT_IPV4.getHostAddress();
@@ -72,26 +69,29 @@ public class HttpServer {
 
     public void start(URI uri) {
 
-        final SslContext sslCtx;
-        if (SSL) {
-            try {
-                SelfSignedCertificate ssc = new SelfSignedCertificate();
-                sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
-            } catch (CertificateException e) {
-                throw new RuntimeException(e);
-            } catch (SSLException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            sslCtx = null;
-        }
-        serverChannel = NettyHttpContainerProvider.createHttp2Server(uri, config, sslCtx);
+        ResteasyDeployment deployment = new ResteasyDeployment();
+        deployment.setWiderRequestMatching(true);
+        deployment.setStatisticsEnabled(true);
+        server = new NettyJaxrsServer();
+        server.setDeployment(deployment);
+
+        String host = uri.getHost();
+        int port = uri.getPort();
+        String path = uri.getPath();
+        server.setHostname(host);
+        server.setPort(port);
+        server.setRootResourcePath(path);
+        server.start();
+
+        ModuleProcessor processor = new ModuleProcessor(deployment.getRegistry(), deployment.getProviderFactory());
+        processor.processInjector(injector);
+
     }
 
     public void stop() {
-        if (serverChannel != null) {
+        if (server != null) {
             LOG.info("HttpServer stop.");
-            serverChannel.close();
+            server.stop();
         }
     }
 
@@ -99,4 +99,5 @@ public class HttpServer {
         IPV4,
         IPV6
     }
+
 }

@@ -26,13 +26,12 @@ under the License.
     <modules>
         <module>libs/atom-core</module>
         <module>libs/atom-remote</module>
-        <module>libs/atom-http</module>
         <module>libs/atom-config</module>
         <module>ui</module>
-        <module>server/atom-server</module>
-        <module>server/atom-dist</module>
         <module>client/atom-client</module>
-        <module>libs/atom-http2</module>
+        <module>libs/atom-http</module>
+        <module>server/atom-server</module>
+        <module>plugins/atom-trino</module>
     </modules>
 
     <name>atom :</name>
@@ -64,13 +63,15 @@ under the License.
         <dbutils.version>2.0</dbutils.version>
         <jersey.version>2.37</jersey.version>
         <jaxb.version>2.3.6</jaxb.version>
+        <resteasy.version>3.15.3.Final</resteasy.version>
+        <servlet.version>4.0.4</servlet.version>
     </properties>
 
     <dependencies>
 
-        <dependency>
+        <!--<dependency>
             <groupId>org.apache.ratis</groupId>
-            <artifactId>ratis-server</artifactId>
+            <artifactId>ratis-httpServer</artifactId>
             <version>2.3.0</version>
             <scope>provided</scope>
         </dependency>
@@ -78,7 +79,7 @@ under the License.
             <groupId>org.apache.ratis</groupId>
             <artifactId>ratis-netty</artifactId>
             <version>2.3.0</version>
-        </dependency>
+        </dependency>-->
         <!--<dependency>
             <groupId>org.apache.ratis</groupId>
             <artifactId>ratis-client</artifactId>
@@ -86,7 +87,7 @@ under the License.
         </dependency>
         <dependency>
             <groupId>org.apache.ratis</groupId>
-            <artifactId>ratis-server</artifactId>
+            <artifactId>ratis-httpServer</artifactId>
             <version>2.3.0</version>
             <scope>provided</scope>
         </dependency>
@@ -204,9 +205,9 @@ under the License.
                 <version>${dbutils.version}</version>
             </dependency>
             <!-- jersey -->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.glassfish.jersey.core</groupId>
-                <artifactId>jersey-server</artifactId>
+                <artifactId>jersey-httpServer</artifactId>
                 <version>${jersey.version}</version>
             </dependency>
             <dependency>
@@ -255,6 +256,28 @@ under the License.
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
                 <version>${jaxb.version}</version>
+            </dependency>-->
+            <!-- resteasy -->
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-netty4</artifactId>
+                <version>3.15.3.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-guice</artifactId>
+                <version>${resteasy.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${servlet.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jboss.resteasy</groupId>
+                <artifactId>resteasy-multipart-provider</artifactId>
+                <version>${resteasy.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
