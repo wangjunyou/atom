@@ -3,6 +3,7 @@ package com.wjy.atom.jdbc.manager.impl;
 import com.wjy.atom.jdbc.annotation.Column;
 import com.wjy.atom.jdbc.annotation.Table;
 import com.wjy.atom.jdbc.manager.EntityManager;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,8 +74,7 @@ public class EntityManagerImpl implements EntityManager {
 
     private Map<String, Object> getParams(Object obj) {
 
-        Class<?> clazz = obj.getClass();
-        Field[] fields = clazz.getDeclaredFields();
+        Field[] fields = FieldUtils.getAllFields(obj.getClass());
         Map<String, Object> datas = new HashMap<>();
         for (Field field : fields) {
             Object data = null;
@@ -84,7 +84,7 @@ public class EntityManagerImpl implements EntityManager {
                 throw new RuntimeException(e);
             }
             if (data != null) {
-                Column column = field.getDeclaredAnnotation(Column.class);
+                Column column = field.getAnnotation(Column.class);
                 if (column == null) continue;
                 String cname = column.name();
                 String key = cname.equals("") ? field.getName() : cname;
@@ -95,11 +95,10 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     private String[] getColumnName(Object obj) {
-        Class<?> clazz = obj.getClass();
-        Field[] fields = clazz.getDeclaredFields();
+        Field[] fields = FieldUtils.getAllFields(obj.getClass());
         String[] columns = new String[fields.length];
         for (int i = 0; i < fields.length; i++) {
-            Column column = fields[i].getDeclaredAnnotation(Column.class);
+            Column column = fields[i].getAnnotation(Column.class);
             if (column == null) continue;
             String cName = column.name();
             columns[i] = cName.equals("") ? fields[i].getName() : cName;
