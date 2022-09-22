@@ -1,10 +1,12 @@
 package com.wjy.atom.server;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import com.google.inject.*;
 import com.wjy.atom.config.module.ConfigModule;
 import com.wjy.atom.http.HttpServer;
 import com.wjy.atom.http.module.HttpModule;
+import com.wjy.atom.server.model.UserInfo;
+import com.wjy.atom.server.service.DeMoService;
+import com.wjy.atom.server.service.DeMoServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,12 +29,19 @@ public class Server {
             System.exit(-1);
         }
 
-        Injector injector = Guice.createInjector(
+        Injector injector = Guice.createInjector(Stage.PRODUCTION,
                 new ConfigModule(props),
-                new HttpModule("com.wjy.atom")
+                new HttpModule("com.wjy.atom"),
+                new AbstractModule() {
+                    @Override
+                    protected void configure() {
+                        bind(DeMoService.class).to(DeMoServiceImpl.class);
+                    }
+                }
         );
 
         try {
+
             HttpServer httpServer = injector.getInstance(HttpServer.class);
             httpServer
                     .initInjector(injector)

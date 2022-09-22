@@ -1,4 +1,4 @@
-package com.wjy.atom.core.utils;
+package com.wjy.atom.core.util;
 
 public class ReflectUtils {
 

@@ -1,4 +1,4 @@
-package com.wjy.atom.core.utils;
+package com.wjy.atom.core.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.MapperFeature;

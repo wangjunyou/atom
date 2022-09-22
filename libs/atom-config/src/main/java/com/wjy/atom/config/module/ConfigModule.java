@@ -5,14 +5,13 @@ import com.google.inject.Binder;
 import com.google.inject.Key;
 import com.google.inject.binder.ConstantBindingBuilder;
 import com.google.inject.binder.LinkedBindingBuilder;
+import com.google.inject.util.Types;
 import com.wjy.atom.config.AtomConfig;
 import com.wjy.atom.config.annotation.ConfigImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 public class ConfigModule extends AbstractModule {
 
@@ -35,83 +34,38 @@ public class ConfigModule extends AbstractModule {
 
         Map<String, Object> datas = config.toMap();
         datas.forEach((k, v) -> {
-            ConstantBindingBuilder bindingBuilder = bindConstant().annotatedWith(new ConfigImpl(k));
-            to(k, v, bindingBuilder);
-//            to(k, v, binder());
-//            bind(v.getClass()).annotatedWith(new ConfigImpl(k)).toInstance(v);
+            Class clazz = getClass(k);
+            if (clazz != null)
+                bind(Key.get(clazz, new ConfigImpl(k))).toInstance(v);
         });
         bind(AtomConfig.class).toInstance(config);
     }
 
-    private void to(String key, Object value, Binder binder) {
-        if (value instanceof String) {
-            String obj = config.getString(key);
-            if(obj !=null)
-                binder.bindConstant().annotatedWith(new ConfigImpl(key)).to(obj);
-        } else if (value instanceof Integer) {
-            Integer obj = config.getInteger(key);
-            if(obj !=null)
-                binder.bindConstant().annotatedWith(new ConfigImpl(key)).to(obj);
-        } else if (value instanceof Long) {
-            Long obj = config.getLong(key);
-            if(obj !=null)
-                binder.bindConstant().annotatedWith(new ConfigImpl(key)).to(obj);
-        } else if (value instanceof Boolean) {
-            Boolean obj = config.getBoolean(key);
-            if(obj !=null)
-                binder.bindConstant().annotatedWith(new ConfigImpl(key)).to(obj);
-        } else if (value instanceof Float) {
-            Float obj = config.getFloat(key);
-            if(obj !=null)
-                binder.bindConstant().annotatedWith(new ConfigImpl(key)).to(obj);
-        } else if (value instanceof Double) {
-            Double obj = config.getDouble(key);
-            if(obj !=null)
-                binder.bindConstant().annotatedWith(new ConfigImpl(key)).to(obj);
-        } else if (value instanceof Byte) {
-            Byte obj = config.getByte(key);
-            if(obj !=null)
-                binder.bindConstant().annotatedWith(new ConfigImpl(key)).to(obj);
-        } else if (value instanceof Class) {
-            Class obj = config.getClass(key);
-            if(obj !=null)
-                binder.bindConstant().annotatedWith(new ConfigImpl(key)).to(obj);
-        }
-    }
-
-    private void to(String key, Object value, ConstantBindingBuilder bindingBuilder) {
-        if (value instanceof String) {
-            String obj = config.getString(key);
-            if(obj !=null)
-                bindingBuilder.to(obj);
-        } else if (value instanceof Integer) {
-            Integer obj = config.getInteger(key);
-            if(obj !=null)
-                bindingBuilder.to(obj);
-        } else if (value instanceof Long) {
-            Long obj = config.getLong(key);
-            if(obj !=null)
-                bindingBuilder.to(obj);
-        } else if (value instanceof Boolean) {
-            Boolean obj = config.getBoolean(key);
-            if(obj !=null)
-                bindingBuilder.to(obj);
-        } else if (value instanceof Float) {
-            Float obj = config.getFloat(key);
-            if(obj !=null)
-                bindingBuilder.to(obj);
-        } else if (value instanceof Double) {
-            Double obj = config.getDouble(key);
-            if(obj !=null)
-                bindingBuilder.to(obj);
-        } else if (value instanceof Byte) {
-            Byte obj = config.getByte(key);
-            if(obj !=null)
-                bindingBuilder.to(obj);
-        } else if (value instanceof Class) {
-            Class obj = config.getClass(key);
-            if(obj !=null)
-                bindingBuilder.to(obj);
+    private Class getClass(Object obj) {
+        if (obj instanceof String) {
+            return String.class;
+        } else if (obj instanceof Integer) {
+            return Integer.class;
+        } else if (obj instanceof Long) {
+            return Long.class;
+        } else if (obj instanceof Boolean) {
+            return Boolean.class;
+        } else if (obj instanceof Float) {
+            return Float.class;
+        } else if (obj instanceof Double) {
+            return Double.class;
+        } else if (obj instanceof Byte) {
+            return Byte.class;
+        } else if (obj instanceof Map) {
+            return Map.class;
+        } else if (obj instanceof List) {
+            return List.class;
+        } else if (obj instanceof Set) {
+            return Set.class;
+        } else if (obj instanceof Class) {
+            return Class.class;
+        } else {
+            return null;
         }
     }
 
