@@ -1,8 +1,8 @@
 package com.wjy.atom.jdbc.manager.impl;
 
 import com.wjy.atom.jdbc.annotation.Column;
+import com.wjy.atom.jdbc.annotation.Table;
 import com.wjy.atom.jdbc.manager.EntityManager;
-import org.apache.commons.dbutils.QueryRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,13 +13,10 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class EntityManagerImpl implements EntityManager {
 
     private static final Logger LOG = LoggerFactory.getLogger(EntityManagerImpl.class);
-
-    private static final QueryRunner qRunner = new QueryRunner();
 
     private Connection connection;
 
@@ -36,15 +33,23 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public <T> T find(Class<T> clazz, Object obj, long offset, long limit) {
         String sql = "SELECT %s FROM %s WHERE %s LIMIT " + limit + " OFFSET " + offset;
+        String tableName = getTableName(obj);
         String[] cName = getColumnName(obj);
         StringBuilder cnsb = new StringBuilder();
         for (String cn : cName) {
-            if(cnsb.length() ==0) cnsb.append(cn);
-            cnsb.append(","+cn);
+            if (cnsb.length() == 0) cnsb.append(cn);
+            else cnsb.append("," + cn);
         }
         Map<String, Object> params = getParams(obj);
+        if (params == null) return null;
+        StringBuilder wsb = new StringBuilder();
+        params.forEach((k, v) -> {
+            if (wsb.length() == 0) wsb.append(k + "=?");
+            else wsb.append("," + k + "=?");
+        });
+        sql = String.format(sql, cnsb.toString(), tableName, wsb.toString());
 
-//        qRunner.query(connection, )
+//        qRunner.query(connection, sql, )
         return null;
     }
 
@@ -56,6 +61,14 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public void persist(Object obj) {
 
+    }
+
+
+    private String getTableName(Object obj) {
+        Class<?> clazz = obj.getClass();
+        Table table = clazz.getDeclaredAnnotation(Table.class);
+        if (table == null) return clazz.getSimpleName();
+        return table.name();
     }
 
     private Map<String, Object> getParams(Object obj) {
@@ -87,6 +100,7 @@ public class EntityManagerImpl implements EntityManager {
         String[] columns = new String[fields.length];
         for (int i = 0; i < fields.length; i++) {
             Column column = fields[i].getDeclaredAnnotation(Column.class);
+            if (column == null) continue;
             String cName = column.name();
             columns[i] = cName.equals("") ? fields[i].getName() : cName;
         }
