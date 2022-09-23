@@ -1,12 +1,15 @@
 package com.wjy.atom.jdbc.manager;
 
+import java.util.List;
+
 public interface EntityManager {
 
-    <T> T find(Class<T> clazz, Object obj, long offset, long limit);
+    public <T> T selectOne(Class<T> clazz, Object obj);
 
-    <T> T query(Class<T> clazz, String sql, Object... obj);
+    public <T> List<T> selectList(Class<T> clazz, Object obj);
+    public <T> List<T> selectList(Class<T> clazz, Object obj, long offset, long limit);
 
-    void persist(Object obj);
+    public void persist(Object obj);
 
 //    void getTransaction();
 //    void

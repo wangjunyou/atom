@@ -11,13 +11,15 @@ public interface ResultHandler<T> {
     public void handleResult(ResultSet resultSet);
 
     default public Field getField(Class clazz, String column) {
-        Field field = FieldUtils.getField(clazz, column);
-        if(field == null) {
+        Field field = FieldUtils.getDeclaredField(clazz, column, true);
+        if (field == null) {
             Field[] fields = FieldUtils.getAllFields(clazz);
             for (Field f : fields) {
-                Column cn = f.getDeclaredAnnotation(Column.class);
-                if (cn != null && "".equals(cn) && column.equals(cn)) {
-                    field = f;
+                Column cn = f.getAnnotation(Column.class);
+                if (cn == null) continue;
+                if (("".equals(cn.value()) && column.equals(f.getName().toLowerCase()))
+                        || (column.equals(cn.value().toLowerCase()))) {
+                    return f;
                 }
             }
         }

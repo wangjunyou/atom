@@ -11,6 +11,7 @@ import java.util.Properties;
 
 public class DataSourceProvider implements Provider<DataSource> {
 
+    private static final String PREFIX = "atom.db.";
     @Inject
     private AtomConfig config;
 
@@ -19,15 +20,13 @@ public class DataSourceProvider implements Provider<DataSource> {
     public DataSource get() {
         Properties props = new Properties();
         config.toMap().forEach((k,v) -> {
-            String key = k.replace("atom", "");
+            String key = k.replace(PREFIX, "");
             props.put(key, v);
         });
         try {
-            BasicDataSource dataSource = BasicDataSourceFactory.createDataSource(props);
+            return BasicDataSourceFactory.createDataSource(props);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        return null;
     }
 }

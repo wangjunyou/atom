@@ -1,8 +1,5 @@
 package com.wjy.atom.remote.netty.config;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * client配置文件
