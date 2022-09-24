@@ -16,9 +16,6 @@ public class MybatisModule extends MyBatisModule {
     private String environmentId;
     private String mapperPkg;
 
-    @Inject
-    private AtomConfig config;
-
     public MybatisModule(String environmentId, String mapperPkg) {
         this.environmentId = environmentId;
         this.mapperPkg = mapperPkg;
@@ -26,15 +23,8 @@ public class MybatisModule extends MyBatisModule {
 
     @Override
     protected void initialize() {
-        Properties props = new Properties();
-        config.toMap().forEach((k,v) -> {
-            String key = k.replace(PREFIX, "");
-            props.put(key, v);
-        });
-        Names.bindProperties(binder(), props
-        );
         environmentId(environmentId);
-        bindDataSourceProviderType(HikariCPProvider.class);
+        bindDataSourceProviderType(MybatisDataSourceProvider.class);
         bindTransactionFactoryType(JdbcTransactionFactory.class);
         addMapperClasses(mapperPkg);
         addInterceptorClass(PageInterceptor.class);

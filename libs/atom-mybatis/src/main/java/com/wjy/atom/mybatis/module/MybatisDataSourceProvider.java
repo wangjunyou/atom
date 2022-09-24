@@ -3,6 +3,7 @@ package com.wjy.atom.mybatis.module;
 import com.wjy.atom.config.AtomConfig;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.mybatis.guice.datasource.hikaricp.HikariCPProvider;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -12,6 +13,7 @@ import java.util.Properties;
 public class MybatisDataSourceProvider implements Provider<DataSource> {
 
     private static final String PREFIX = "atom.db.";
+
     @Inject
     private AtomConfig config;
 

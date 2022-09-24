@@ -22,11 +22,11 @@ public class MybatisModuleTest {
 
     @BeforeEach
     public void init() throws IOException {
-        InputStream inputStream = getClass().getResourceAsStream("./atom-conf.properties");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("./atom-conf.properties");
         Properties props = new Properties();
         props.load(inputStream);
         injector = Guice.createInjector(new ConfigModule(props),
-                new MybatisModule("test", "com.wjy.atom.mybatis.sample"),
+                new MybatisModule("test", "com.wjy.atom.mybatis.sample.mapper"),
                 new AbstractModule() {
                     @Override
                     protected void configure() {
@@ -38,7 +38,7 @@ public class MybatisModuleTest {
 
     @Test
     public void getUser() {
-        User user = userService.getUser(1);
+        User user = userService.getUser(6);
         System.out.println(user.toString());
     }
 }
