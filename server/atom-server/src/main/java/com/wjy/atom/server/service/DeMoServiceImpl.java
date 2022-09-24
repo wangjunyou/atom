@@ -1,6 +1,6 @@
 package com.wjy.atom.server.service;
 
-import com.wjy.atom.server.model.UserInfo;
+import com.wjy.atom.server.domain.UserInfo;
 
 import javax.inject.Singleton;
 

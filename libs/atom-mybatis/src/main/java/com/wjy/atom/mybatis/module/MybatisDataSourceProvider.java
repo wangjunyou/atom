@@ -20,9 +20,11 @@ public class MybatisDataSourceProvider implements Provider<DataSource> {
     @Override
     public DataSource get() {
         Properties props = new Properties();
-        config.toMap().forEach((k,v) -> {
-            String key = k.replace(PREFIX, "");
-            props.put(key, v);
+        config.toMap().forEach((k, v) -> {
+            if (k.startsWith(PREFIX)) {
+                String key = k.replace(PREFIX, "");
+                props.put(key, v);
+            }
         });
         HikariConfig hconfig = new HikariConfig(props);
         return new HikariDataSource(hconfig);

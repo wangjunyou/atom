@@ -28,12 +28,21 @@
         </dependency>
         <dependency>
             <groupId>com.wjy.atom</groupId>
+            <artifactId>atom-mybatis</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wjy.atom</groupId>
             <artifactId>atom-ui</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
     </dependencies>
 </project>

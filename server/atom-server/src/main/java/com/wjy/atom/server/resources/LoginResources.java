@@ -1,8 +1,10 @@
 package com.wjy.atom.server.resources;
 
 import com.wjy.atom.config.annotation.Config;
-import com.wjy.atom.server.model.UserInfo;
+import com.wjy.atom.server.domain.User;
+import com.wjy.atom.server.domain.UserInfo;
 import com.wjy.atom.server.service.DeMoService;
+import com.wjy.atom.server.service.UserService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -16,6 +18,9 @@ public class LoginResources {
 
     @Inject
     private DeMoService deMoService;
+
+    @Inject
+    private UserService userService;
 
     @POST
     @Path("login")
@@ -36,6 +41,14 @@ public class LoginResources {
     public String getDeMo() {
         value += "1";
         return "get Demo: " + value;
+    }
+
+    @POST
+    @Path("getuser")
+    @Produces(MediaType.APPLICATION_JSON)
+    public User getUser(@FormParam("id") Integer id) {
+        User user = userService.getUser(id);
+        return user;
     }
 
 }

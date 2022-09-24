@@ -1,4 +1,4 @@
-package com.wjy.atom.server.model;
+package com.wjy.atom.server.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,14 +11,11 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserInfo {
+public class User {
 
-    private String id;
-
+    private Integer id;
     private String name;
-
-    private String email;
-
     private Date births;
+    private String addr;
 
 }

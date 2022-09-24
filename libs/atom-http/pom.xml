@@ -39,10 +39,14 @@
             <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
 
-        <!--<dependency>
+        <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-multipart-provider</artifactId>
-        </dependency>-->
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jackson2-provider</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
