@@ -33,6 +33,7 @@ under the License.
         <module>server/atom-server</module>
         <module>plugins/atom-trino</module>
         <module>libs/atom-jdbc</module>
+        <module>libs/atom-mybatis</module>
     </modules>
 
     <name>atom :</name>
@@ -66,6 +67,10 @@ under the License.
         <jaxb.version>2.3.6</jaxb.version>
         <resteasy.version>3.15.3.Final</resteasy.version>
         <servlet.version>4.0.4</servlet.version>
+        <mybatis.version>3.5.9</mybatis.version>
+        <mybatis.guice.version>3.17</mybatis.guice.version>
+        <pagehelper.version>5.3.1</pagehelper.version>
+        <hikaricp.version>5.0.1</hikaricp.version>
     </properties>
 
     <dependencies>
@@ -284,6 +289,28 @@ under the License.
                 <groupId>org.jboss.resteasy</groupId>
                 <artifactId>resteasy-multipart-provider</artifactId>
                 <version>${resteasy.version}</version>
+            </dependency>
+
+            <!-- db -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-guice</artifactId>
+                <version>${mybatis.guice.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.zaxxer</groupId>
+                <artifactId>HikariCP</artifactId>
+                <version>${hikaricp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
