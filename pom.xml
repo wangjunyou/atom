@@ -27,13 +27,14 @@ under the License.
         <module>libs/atom-core</module>
         <module>libs/atom-remote</module>
         <module>libs/atom-config</module>
-        <module>ui</module>
-        <module>client/atom-client</module>
         <module>libs/atom-http</module>
-        <module>server/atom-server</module>
-        <module>plugins/atom-trino</module>
         <module>libs/atom-jdbc</module>
         <module>libs/atom-mybatis</module>
+        <module>plugins/atom-trino</module>
+        <module>client/atom-client</module>
+        <module>ui</module>
+        <module>server/atom-server</module>
+        <module>server/atom-dist</module>
     </modules>
 
     <name>atom :</name>
