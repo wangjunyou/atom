@@ -17,17 +17,17 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach(
-  async (
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next: NavigationGuardNext
-  ) => {
-    // NProgress.start()
-  }
-)
-router.afterEach(() => {
-  // NProgress.done()
-})
+// router.beforeEach(
+//   async (
+//     to: RouteLocationNormalized,
+//     from: RouteLocationNormalized,
+//     next: NavigationGuardNext
+//   ) => {
+//     // NProgress.start()
+//   }
+// )
+// router.afterEach(() => {
+//   // NProgress.done()
+// })
 
 export default router

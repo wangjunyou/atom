@@ -48,6 +48,7 @@ public class LoginResources {
     @Produces(MediaType.APPLICATION_JSON)
     public User getUser(@FormParam("id") Integer id) {
         User user = userService.getUser(id);
+        System.out.println(user.toString());
         return user;
     }
 

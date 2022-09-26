@@ -15,5 +15,14 @@
     <name>atom : trino</name>
     <packaging>jar</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.trino</groupId>
+            <artifactId>trino-jdbc</artifactId>
+            <version>397</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
 
 </project>

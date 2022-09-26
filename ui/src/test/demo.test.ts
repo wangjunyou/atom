@@ -1,6 +1,8 @@
 import { expect, test } from 'vitest'
 import utils from '@/utils'
 import qs from 'qs'
+import {getUser} from "@/service/modules/user";
+import {UserInfo} from "@/service/modules/user/types";
 
 test('ceshi', () => {
   const modules = import.meta.glob('/src/views/**/**.tsx')
@@ -40,4 +42,9 @@ test('test2', () => {
   console.log(jsonInfo2)
   let data = qs.stringify(jsonInfo, { arrayFormat: 'repeat' })
   console.log(data)
+})
+
+test('getUser', ()=>{
+  const data = getUser({id: 1})
+  console.log(data.data)
 })

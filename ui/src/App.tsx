@@ -6,7 +6,8 @@ const App = defineComponent({
   setup() {},
   render() {
     // return <div>IOI WEB</div>
-    return <router-view />
+    // return <router-view />
+    return <Login></Login>
   }
 })
 
