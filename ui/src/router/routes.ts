@@ -7,6 +7,14 @@ const modules = import.meta.glob('/src/views/**/**.tsx')
 const components: { [key: string]: Component } = utils.mapping(modules)
 const loginPage: RouteRecordRaw[] = [
   {
+    path: '/',
+    name: 'home',
+    component: components['home'],
+    meta: {
+      title: 'home'
+    }
+  },
+  {
     path: '/login',
     name: 'login',
     component: components['login'],

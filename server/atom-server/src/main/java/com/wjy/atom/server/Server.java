@@ -5,6 +5,7 @@ import com.wjy.atom.config.module.ConfigModule;
 import com.wjy.atom.http.HttpServer;
 import com.wjy.atom.http.module.HttpModule;
 import com.wjy.atom.mybatis.module.MybatisModule;
+import com.wjy.atom.server.resources.MyFilter;
 import com.wjy.atom.server.service.DeMoService;
 import com.wjy.atom.server.service.DeMoServiceImpl;
 import com.wjy.atom.server.service.UserService;

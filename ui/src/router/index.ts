@@ -1,8 +1,8 @@
 import {
-    createRouter,
-    createWebHistory,
-    NavigationGuardNext,
-    RouteLocationNormalized
+  createRouter,
+  createWebHistory,
+  NavigationGuardNext,
+  RouteLocationNormalized
 } from 'vue-router'
 
 import routes from './routes'
@@ -11,22 +11,23 @@ import routes from './routes'
 // import 'nprogress/nprogress.css'
 
 const router = createRouter({
-    history: createWebHistory(
-        import.meta.env.MODE === 'production' ? 'atom/ui' : '/'
-    ),
-    routes
+  history: createWebHistory(
+    import.meta.env.MODE === 'production' ? 'atom/ui' : '/'
+  ),
+  routes
 })
 
-/*router.beforeEach(
-    async (
-        to: RouteLocationNormalized,
-        from: RouteLocationNormalized,
-        next: NavigationGuardNext
-    ) => {
-        // NProgress.start()
-
-
-    }
-)*/
+router.beforeEach(
+  async (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+    // NProgress.start()
+  }
+)
+router.afterEach(() => {
+  // NProgress.done()
+})
 
 export default router

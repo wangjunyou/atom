@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.Path;
+import javax.ws.rs.ext.Provider;
 import java.util.Set;
 
 public class HttpModule extends AbstractModule {
@@ -28,10 +29,14 @@ public class HttpModule extends AbstractModule {
 
         install(new JaxrsModule());
         install(new RequestScopeModule());
-        Set<Class<?>> classes = new PackageFinder()
+        Set<Class<?>> pathClass = new PackageFinder()
                 .toPackage(pkg)
                 .getTypesAnnotatedWith(Path.class);
-        classes.forEach(clazz -> bind(clazz));
+        pathClass.forEach(clazz -> bind(clazz));
+        Set<Class<?>> ProviderClass = new PackageFinder()
+                .toPackage(pkg)
+                .getTypesAnnotatedWith(Provider.class);
+        ProviderClass.forEach(clazz -> bind(clazz));
         bind(HttpServer.class);
 
     }

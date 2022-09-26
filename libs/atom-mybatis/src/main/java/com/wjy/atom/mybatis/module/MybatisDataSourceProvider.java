@@ -26,7 +26,7 @@ public class MybatisDataSourceProvider implements Provider<DataSource> {
                 props.put(key, v);
             }
         });
-        HikariConfig hconfig = new HikariConfig(props);
-        return new HikariDataSource(hconfig);
+        HikariConfig hConfig = new HikariConfig(props);
+        return new HikariDataSource(hConfig);
     }
 }
