@@ -27,8 +27,7 @@ const service = axios.create(requestConfig)
 })*/
 
 service.interceptors.response.use((resp: AxiosResponse) => {
-  console.log(resp.data)
-  return resp.data;
+  return resp.data.data
 })
 
 export { service as axios }

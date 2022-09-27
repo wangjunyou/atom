@@ -1,0 +1,44 @@
+package com.wjy.atom.trino;
+
+import io.trino.jdbc.TrinoDriver;
+
+import java.sql.*;
+import java.util.Properties;
+
+public class JdbcMain {
+    public static void main(String[] args) throws SQLException {
+        TrinoDriver trinoDriver = new TrinoDriver();
+        Properties properties = new Properties();
+//        properties.setProperty("SSL", "false");
+        properties.setProperty("user", "hadoop");
+        properties.setProperty("password", "");
+        Connection connection = trinoDriver.connect("jdbc:trino://node1:8880/phoenix/information_schema", properties);
+//        PreparedStatement statement = connection.prepareStatement("select count(1) from columns");
+        PreparedStatement statement = connection.prepareStatement("select * from columns");
+        ResultSet resultSet = statement.executeQuery();
+        ResultSetMetaData metaData = resultSet.getMetaData();
+        int columnCount = metaData.getColumnCount();
+        for (int i = 0; i < columnCount; i++) {
+            String columnName = metaData.getColumnName(i + 1);
+            String columnClassName = metaData.getColumnClassName(i + 1);
+            String columnTypeName = metaData.getColumnTypeName(i + 1);
+            System.out.println(columnClassName + "=" + columnName + "=" + columnTypeName);
+        }
+        System.out.println("===============");
+        while (resultSet.next()) {
+            for (int i = 0; i < columnCount; i++) {
+                String columnName = metaData.getColumnName(i + 1);
+                Object object = resultSet.getObject(columnName);
+                System.out.print(columnName + "=" + object + ",");
+            }
+            System.out.println();
+            /*Object object1 = resultSet.getObject(1);
+            Object object2 = resultSet.getObject(2);
+            Object object3 = resultSet.getObject(3);
+            Object object4 = resultSet.getObject(4);
+            System.out.println(object1+"="+object2+"="+object3+"="+object4);*/
+            /*Object object = resultSet.getObject(1);
+            System.out.println(object);*/
+        }
+    }
+}

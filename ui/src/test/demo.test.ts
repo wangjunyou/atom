@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest'
 import utils from '@/utils'
 import qs from 'qs'
-import {getUser} from "@/service/modules/user";
+import {getUser, getUser2} from "@/service/modules/user";
 import {UserInfo} from "@/service/modules/user/types";
 
 test('ceshi', () => {
@@ -46,5 +46,5 @@ test('test2', () => {
 
 test('getUser', ()=>{
   const data = getUser({id: 1})
-  console.log(data.data)
+  console.log(data)
 })
