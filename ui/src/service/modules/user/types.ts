@@ -6,6 +6,12 @@ interface UserInfo {
     addr: string
 }
 
+interface UserInfo2 {
+    id: number,
+    name: string
+}
+
 export {
-    UserInfo
+    UserInfo,
+    UserInfo2
 }

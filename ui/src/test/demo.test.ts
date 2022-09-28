@@ -48,3 +48,8 @@ test('getUser', ()=>{
   const data = getUser({id: 1})
   console.log(data)
 })
+
+test('ddd',()=>{
+  const arr = [401,405]
+  console.log(arr.includes(4001));
+})

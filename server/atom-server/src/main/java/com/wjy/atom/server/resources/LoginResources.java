@@ -2,20 +2,15 @@ package com.wjy.atom.server.resources;
 
 import com.wjy.atom.config.annotation.Config;
 import com.wjy.atom.server.domain.User;
-import com.wjy.atom.server.service.DeMoService;
 import com.wjy.atom.server.service.UserService;
 import com.wjy.atom.server.util.Result;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.Date;
 
 @Path("api")
 public class LoginResources {
-
-    @Inject
-    private DeMoService deMoService;
 
     @Inject
     private UserService userService;
