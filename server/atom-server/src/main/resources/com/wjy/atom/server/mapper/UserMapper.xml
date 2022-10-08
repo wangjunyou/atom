@@ -26,4 +26,8 @@
     select * from db_user where id=#{value}
   </select>
 
+  <select id="getUsers" resultType="com.wjy.atom.server.domain.User" parameterType="java.lang.String">
+    select * from db_user where name=#{name}
+  </select>
+
 </mapper>

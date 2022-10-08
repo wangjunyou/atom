@@ -5,8 +5,6 @@ import com.wjy.atom.config.module.ConfigModule;
 import com.wjy.atom.http.HttpServer;
 import com.wjy.atom.http.module.HttpModule;
 import com.wjy.atom.mybatis.module.MybatisModule;
-import com.wjy.atom.server.service.DeMoService;
-import com.wjy.atom.server.service.DeMoServiceImpl;
 import com.wjy.atom.server.service.UserService;
 import com.wjy.atom.server.service.impl.UserServiceMapperImpl;
 import org.slf4j.Logger;
@@ -34,11 +32,11 @@ public class Server {
         Injector injector = Guice.createInjector(Stage.PRODUCTION,
                 new ConfigModule(props),
                 new HttpModule("com.wjy.atom"),
-                new MybatisModule("prod","com.wjy.atom.server.mapper"),
+                new MybatisModule("prod","com.wjy.atom"),
+//                new MybatisModule("prod",""),
                 new AbstractModule() {
                     @Override
                     protected void configure() {
-                        bind(DeMoService.class).to(DeMoServiceImpl.class);
                         bind(UserService.class).to(UserServiceMapperImpl.class).in(Scopes.SINGLETON);
                     }
                 }

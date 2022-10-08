@@ -7,27 +7,28 @@ import {
 
 import routes from './routes'
 
-// import NProgress from 'nprogress'
-// import 'nprogress/nprogress.css'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 const router = createRouter({
   history: createWebHistory(
-    import.meta.env.MODE === 'production' ? 'atom/ui' : '/'
+    import.meta.env.MODE === 'production' ? 'atom/ui' : '/atom/ui'
   ),
   routes
 })
-
-// router.beforeEach(
-//   async (
-//     to: RouteLocationNormalized,
-//     from: RouteLocationNormalized,
-//     next: NavigationGuardNext
-//   ) => {
-//     // NProgress.start()
-//   }
-// )
-// router.afterEach(() => {
-//   // NProgress.done()
-// })
+/* weidenglu tiaozhuan */
+router.beforeEach(
+  async (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+    NProgress.start()
+    next()
+  }
+)
+router.afterEach(() => {
+  NProgress.done()
+})
 
 export default router

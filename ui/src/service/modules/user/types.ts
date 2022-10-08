@@ -1,11 +1,8 @@
-
 interface UserInfo {
-    id: number,
-    name: string,
-    births: number,
-    addr: string
+  id: number
+  name: string
+  births: number
+  addr: string
 }
 
-export {
-    UserInfo
-}
+export { UserInfo }

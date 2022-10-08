@@ -10,13 +10,13 @@ const requestConfig: AxiosRequestConfig = {
   timeout: 15000,
   transformRequest: (params) => {
     if (_.isPlainObject(params)) {
-      return qs.stringify(params, { arrayFormat: "repeat"})
+      return qs.stringify(params, { arrayFormat: 'repeat' })
     } else {
       return params
     }
   },
   paramsSerializer: (params) => {
-    return qs.stringify(params, {arrayFormat: "repeat"})
+    return qs.stringify(params, { arrayFormat: 'repeat' })
   }
 }
 
@@ -27,7 +27,7 @@ const service = axios.create(requestConfig)
 })*/
 
 service.interceptors.response.use((resp: AxiosResponse) => {
-  return resp.data.data
+  return resp.data
 })
 
 export { service as axios }

@@ -35,6 +35,7 @@ under the License.
         <module>ui</module>
         <module>server/atom-server</module>
         <module>server/atom-dist</module>
+        <module>libs/atom-shiro</module>
     </modules>
 
     <name>atom :</name>

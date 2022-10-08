@@ -38,7 +38,9 @@ public class MybatisModuleTest {
 
     @Test
     public void getUser() {
-        User user = userService.getUser(6);
-        System.out.println(user.toString());
+        for (int i = 1; i <= 6; i++) {
+            User user = userService.getUser(i);
+            System.out.println(user.toString());
+        }
     }
 }

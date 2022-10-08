@@ -29,15 +29,16 @@ public class HttpModule extends AbstractModule {
 
         install(new JaxrsModule());
         install(new RequestScopeModule());
-        Set<Class<?>> pathClass = new PackageFinder()
-                .toPackage(pkg)
-                .getTypesAnnotatedWith(Path.class);
+
+        PackageFinder finder = new PackageFinder()
+                .toPackage(pkg);
+        Set<Class<?>> pathClass = finder.getTypesAnnotatedWith(Path.class);
         pathClass.forEach(clazz -> bind(clazz));
-        Set<Class<?>> ProviderClass = new PackageFinder()
-                .toPackage(pkg)
-                .getTypesAnnotatedWith(Provider.class);
-        ProviderClass.forEach(clazz -> bind(clazz));
-        bind(HttpServer.class);
+
+        Set<Class<?>> providerClass = finder.getTypesAnnotatedWith(Provider.class);
+        providerClass.forEach(clazz -> bind(clazz));
+
+//        bind(HttpServer.class);
 
     }
 }

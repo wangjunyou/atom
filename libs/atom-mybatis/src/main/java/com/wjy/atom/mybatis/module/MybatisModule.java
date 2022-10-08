@@ -1,14 +1,12 @@
 package com.wjy.atom.mybatis.module;
 
 import com.github.pagehelper.PageInterceptor;
-import com.google.inject.name.Names;
-import com.wjy.atom.config.AtomConfig;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.mybatis.guice.MyBatisModule;
-import org.mybatis.guice.datasource.hikaricp.HikariCPProvider;
+import com.wjy.atom.core.finder.PackageFinder;
 
-import javax.inject.Inject;
-import java.util.Properties;
+import java.util.Set;
 
 public class MybatisModule extends MyBatisModule {
 
@@ -26,7 +24,14 @@ public class MybatisModule extends MyBatisModule {
         environmentId(environmentId);
         bindDataSourceProviderType(MybatisDataSourceProvider.class);
         bindTransactionFactoryType(JdbcTransactionFactory.class);
-        addMapperClasses(mapperPkg);
+
+        if (mapperPkg != null && !"".equals(mapperPkg)) {
+            Set<Class<?>> mapperClasses = new PackageFinder()
+                    .toPackage(mapperPkg)
+                    .getTypesAnnotatedWith(Mapper.class);
+            addMapperClasses(mapperClasses);
+        }
+
         addInterceptorClass(PageInterceptor.class);
     }
 }

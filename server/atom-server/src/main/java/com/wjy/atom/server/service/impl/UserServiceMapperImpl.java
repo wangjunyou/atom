@@ -5,6 +5,7 @@ import com.wjy.atom.server.mapper.UserMapper;
 import com.wjy.atom.server.service.UserService;
 
 import javax.inject.Inject;
+import java.util.List;
 
 public class UserServiceMapperImpl implements UserService {
 
@@ -14,5 +15,10 @@ public class UserServiceMapperImpl implements UserService {
     @Override
     public User getUser(Integer id) {
         return userMapper.getUser(id);
+    }
+
+    @Override
+    public List<User> getUsers(String name) {
+        return userMapper.getUsers(name);
     }
 }

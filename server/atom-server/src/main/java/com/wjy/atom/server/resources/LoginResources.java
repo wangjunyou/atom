@@ -2,20 +2,16 @@ package com.wjy.atom.server.resources;
 
 import com.wjy.atom.config.annotation.Config;
 import com.wjy.atom.server.domain.User;
-import com.wjy.atom.server.service.DeMoService;
 import com.wjy.atom.server.service.UserService;
 import com.wjy.atom.server.util.Result;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.Date;
+import java.util.List;
 
 @Path("api")
 public class LoginResources {
-
-    @Inject
-    private DeMoService deMoService;
 
     @Inject
     private UserService userService;
@@ -41,17 +37,12 @@ public class LoginResources {
     }
 
     @POST
-    @Path("getuser2")
+    @Path("getusers")
     @Produces(MediaType.APPLICATION_JSON)
-    public Result getUser2(@FormParam("id") Integer id) {
-        User user = userService.getUser(id);
-        System.out.println(user.toString());
-        Result<User> result = new Result<>();
-        result.setCode(200);
-        result.setMsg("ok");
-        result.setData(user);
-        return result;
+    public List<User> getUsers(@FormParam("name") String name) {
+        List<User> users = userService.getUsers(name);
+        System.out.println(users.size());
+        return users;
     }
-
 
 }
