@@ -1,8 +1,17 @@
+
 interface UserInfo {
-  id: number
-  name: string
-  births: number
-  addr: string
+    id: number,
+    name: string,
+    births: number,
+    addr: string
 }
 
-export { UserInfo }
+interface UserInfo2 {
+    id: number,
+    name: string
+}
+
+export {
+    UserInfo,
+    UserInfo2
+}

@@ -8,7 +8,6 @@ import com.wjy.atom.server.util.Result;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
 
 @Path("api")
 public class LoginResources {
@@ -37,12 +36,17 @@ public class LoginResources {
     }
 
     @POST
-    @Path("getusers")
+    @Path("getuser2")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> getUsers(@FormParam("name") String name) {
-        List<User> users = userService.getUsers(name);
-        System.out.println(users.size());
-        return users;
+    public Result getUser2(@FormParam("id") Integer id) {
+        User user = userService.getUser(id);
+        System.out.println(user.toString());
+        Result<User> result = new Result<>();
+        result.setCode(200);
+        result.setMsg("ok");
+        result.setData(user);
+        return result;
     }
+
 
 }
