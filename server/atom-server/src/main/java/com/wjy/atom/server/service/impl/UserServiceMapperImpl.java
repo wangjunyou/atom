@@ -3,6 +3,7 @@ package com.wjy.atom.server.service.impl;
 import com.wjy.atom.server.domain.User;
 import com.wjy.atom.server.mapper.UserMapper;
 import com.wjy.atom.server.service.UserService;
+import org.mybatis.guice.transactional.Transactional;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -13,12 +14,30 @@ public class UserServiceMapperImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User getUser(Integer id) {
-        return userMapper.getUser(id);
+    public List<User> queryUserByName(String name) {
+        return userMapper.queryUserByName(name);
+    }
+
+    @Transactional
+    @Override
+    public void insertUser(User user) {
+        userMapper.insertUser(user);
     }
 
     @Override
-    public List<User> getUsers(String name) {
-        return userMapper.getUsers(name);
+    public void deleteUserById(Integer id) {
+        userMapper.deleteUserById(id);
     }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
+    }
+
+    @Override
+    public void updateUserIfNecessary(User user) {
+        userMapper.updateUserIfNecessary(user);
+    }
+
+
 }

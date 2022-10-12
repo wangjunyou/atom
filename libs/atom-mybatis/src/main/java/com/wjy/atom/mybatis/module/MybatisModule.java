@@ -1,11 +1,13 @@
 package com.wjy.atom.mybatis.module;
 
 import com.github.pagehelper.PageInterceptor;
+import com.github.pagehelper.QueryInterceptor;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.mybatis.guice.MyBatisModule;
 import com.wjy.atom.core.finder.PackageFinder;
 
+import java.util.Arrays;
 import java.util.Set;
 
 public class MybatisModule extends MyBatisModule {
@@ -32,6 +34,7 @@ public class MybatisModule extends MyBatisModule {
             addMapperClasses(mapperClasses);
         }
 
-        addInterceptorClass(PageInterceptor.class);
+//        addInterceptorClass(PageInterceptor.class);
+        addInterceptorsClasses(Arrays.asList(PageInterceptor.class, QueryInterceptor.class));
     }
 }

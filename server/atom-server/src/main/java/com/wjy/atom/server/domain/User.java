@@ -10,12 +10,14 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class User {
 
     private Integer id;
-    private String name;
-    private Date births;
-    private String addr;
+    private String userName;
+    private String userPassword;
+    private String phone;
+    private String email;
+    private Date createTime;
+    private Date updateTime;
 
 }

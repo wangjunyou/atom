@@ -1,6 +1,18 @@
+/* login/index.scss */
 
 .login {
-  background-color: #0366d6;
-  height: 100vh;
   width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #0098e1;
+
+  .login-model {
+    width: 400px;
+    min-height: 260px;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 2px 25px 0 rgb(0 0 0 / 30%);
+  }
 }
