@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2009-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wjy.atom.server.mapper.MenuMapper">
+
+    <resultMap id="Menu" type="com.wjy.atom.server.domain.Menu">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="menu_name" property="menuName"/>
+        <result column="menu_path" property="menuPath"/>
+        <result column="menu_component" property="menuComponent"/>
+        <result column="menu_icon" property="menuIcon"/>
+        <result column="display" property="display"/>
+        <result column="order_num" property="orderNum"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="Menu" parameterType="java.lang.Integer">
+        select *
+        from t_menu
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.wjy.atom.server.domain.Menu">
+        insert into t_menu
+        (id, parent_id, menu_name, menu_path, menu_component, menu_icon, display, order_num, create_time, update_time)
+        values (#{id}, #{parentId}, #{menuName}, #{menuPath}, #{menuComponent}, #{menuIcon}, #{display}, #{orderNum},
+                #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.wjy.atom.server.domain.Menu">
+        update t_menu
+        set parent_id=#{parentId},
+            menu_name=#{menuName},
+            menu_path=#{menuPath},
+            menu_component=#{menuComponent},
+            menu_icon=#{menuIcon},
+            display=#{display},
+            order_num=#{orderNum},
+            update_time=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <update id="updateIfNecessary" parameterType="com.wjy.atom.server.domain.Menu">
+        update t_menu
+        <set>
+            <if test="parentId !=null">parent_id=#{parentId},</if>
+            <if test="menuName !=null">menu_name=#{menuName},</if>
+            <if test="menuPath !=null">menu_path=#{menuPath},</if>
+            <if test="menuComponent !=null">menu_component=#{menuComponent},</if>
+            <if test="menuIcon !=null">menu_icon=#{menuIcon},</if>
+            <if test="display !=null">display=#{display},</if>
+            <if test="orderNum !=null">order_num=#{orderNum},</if>
+            <if test="updateTime !=null">update_time=#{updateTime}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="com.wjy.atom.server.domain.Menu">
+        delete
+        from t_menu
+        where id = #{id}
+    </delete>
+
+    <select id="selectMenuByRoleId" resultMap="Menu" parameterType="java.lang.Integer">
+        select m.*
+        from t_menu m join t_role_menu rm
+        where m.id = rm.menu_id
+          and rm.role_id = #{roleId}
+    </select>
+
+</mapper>

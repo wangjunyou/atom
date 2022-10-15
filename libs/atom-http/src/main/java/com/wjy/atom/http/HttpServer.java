@@ -1,19 +1,27 @@
 package com.wjy.atom.http;
 
 import com.google.common.net.InetAddresses;
+import com.google.inject.Binding;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.wjy.atom.config.annotation.Config;
+import org.jboss.resteasy.plugins.guice.GuiceResourceFactory;
 import org.jboss.resteasy.plugins.guice.ModuleProcessor;
 import org.jboss.resteasy.plugins.server.netty.NettyJaxrsServer;
+import org.jboss.resteasy.spi.ResourceFactory;
 import org.jboss.resteasy.spi.ResteasyDeployment;
+import org.jboss.resteasy.util.GetRestful;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.ws.rs.ext.Provider;
 import java.math.BigInteger;
 import java.net.Inet4Address;
 import java.net.Inet6Address;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class HttpServer {
 
@@ -72,6 +80,7 @@ public class HttpServer {
         ResteasyDeployment deployment = new ResteasyDeployment();
         deployment.setWiderRequestMatching(true);
         deployment.setStatisticsEnabled(true);
+
         server = new NettyJaxrsServer();
         server.setDeployment(deployment);
 

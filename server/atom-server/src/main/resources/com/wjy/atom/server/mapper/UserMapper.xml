@@ -32,44 +32,41 @@
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
-    <select id="queryUserByName" resultMap="User" parameterType="java.lang.String">
+    <select id="selectByName" resultMap="User" parameterType="java.lang.String">
         select *
         from t_user
         where user_name = #{name}
     </select>
 
-    <insert id="insertUser" parameterType="com.wjy.atom.server.domain.User">
+    <insert id="insert" parameterType="com.wjy.atom.server.domain.User">
         insert into t_user
             (id, user_name, user_password, phone, email, create_time, update_time)
         values (#{id}, #{userName}, #{userPassword}, #{phone}, #{email}, #{createTime}, #{updateTime})
     </insert>
 
-    <update id="updateUser" parameterType="com.wjy.atom.server.domain.User">
+    <update id="update" parameterType="com.wjy.atom.server.domain.User">
         update t_user
-        set id=#{id},
-            user_name=#{userName},
+        set user_name=#{userName},
             user_password=#{userPassword},
             phone=#{phone},
             email=#{email},
-            create_time=#{createTime},
             update_time=#{updateTime}
         where id = #{id}
     </update>
 
-    <update id="updateUserIfNecessary" parameterType="com.wjy.atom.server.domain.User">
+    <update id="updateIfNecessary" parameterType="com.wjy.atom.server.domain.User">
         update t_user
         <set>
             <if test="userName !=null">user_name=#{userName},</if>
             <if test="userPassword !=null">user_password=#{userPassword},</if>
             <if test="phone !=null">phone=#{phone},</if>
             <if test="email !=null">email=#{email},</if>
-            <if test="createTime !=null">create_time=#{createTime},</if>
             <if test="updateTime !=null">update_time=#{updateTime}</if>
         </set>
         where id=#{id}
     </update>
 
-    <delete id="deleteUserById" parameterType="com.wjy.atom.server.domain.User">
+    <delete id="delete" parameterType="com.wjy.atom.server.domain.User">
         delete
         from t_user
         where id = #{id}

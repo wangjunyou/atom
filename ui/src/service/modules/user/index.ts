@@ -18,7 +18,7 @@ export function getLogin(data: any): any {
 
 export function getUsers(data: any): any {
   return axios({
-    url: '/getusers',
+    url: '/queryUserName',
     method: 'post',
     data
   })

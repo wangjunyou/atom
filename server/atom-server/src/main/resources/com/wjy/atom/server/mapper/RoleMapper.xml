@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+
+       Copyright 2009-2022 the original author or authors.
+
+       Licensed under the Apache License, Version 2.0 (the "License");
+       you may not use this file except in compliance with the License.
+       You may obtain a copy of the License at
+
+          https://www.apache.org/licenses/LICENSE-2.0
+
+       Unless required by applicable law or agreed to in writing, software
+       distributed under the License is distributed on an "AS IS" BASIS,
+       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+       See the License for the specific language governing permissions and
+       limitations under the License.
+
+-->
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wjy.atom.server.mapper.RoleMapper">
+
+    <resultMap id="Role" type="com.wjy.atom.server.domain.Role">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="role_name" property="roleName"/>
+        <result column="description" property="description"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+    <select id="selectById" resultMap="Role" parameterType="java.lang.Integer">
+        select *
+        from t_role
+        where id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.wjy.atom.server.domain.Role">
+        insert into t_role
+            (id, parent_id, role_name, description, create_time, update_time)
+        values (#{id}, #{parentId}, #{roleName}, #{description}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.wjy.atom.server.domain.Role">
+        update t_role
+        set parent_id=#{parentId},
+            role_name=#{roleName},
+            description=#{description},
+            update_time=#{updateTime}
+        where id = #{id}
+    </update>
+
+    <update id="updateIfNecessary" parameterType="com.wjy.atom.server.domain.Role">
+        update t_role
+        <set>
+            <if test="parentId !=null">parent_id=#{parentId},</if>
+            <if test="roleName !=null">role_name=#{roleName},</if>
+            <if test="description !=null">description=#{description},</if>
+            <if test="updateTime !=null">update_time=#{updateTime}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <delete id="delete" parameterType="com.wjy.atom.server.domain.Role">
+        delete
+        from t_role
+        where id = #{id}
+    </delete>
+
+    <select id="selectRoleByUserId" resultMap="Role" parameterType="java.lang.Integer">
+        select r.*
+        from t_role r join t_user_role ur
+        where r.id = ur.role_id
+          and ur.user_id = #{userId}
+    </select>
+
+</mapper>

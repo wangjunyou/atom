@@ -1,6 +1,6 @@
 create table t_user
 (
-    `id`            int not null,
+    `id`            int not null auto_increment,
     `user_name`     varchar(64),
     `user_password` varchar(64),
     `phone`         varchar(11),
@@ -12,7 +12,7 @@ create table t_user
 
 create table t_role
 (
-    `id`          int not null,
+    `id`          int not null auto_increment,
     `parent_id`   int,
     `role_name`   varchar(64),
     `description` varchar(64),
@@ -23,7 +23,7 @@ create table t_role
 
 create table t_user_role
 (
-    `id`      int not null,
+    `id`      int not null auto_increment,
     `user_id` int,
     `role_id` int,
     primary key (`id`),
@@ -32,7 +32,7 @@ create table t_user_role
 
 create table t_menu
 (
-    `id`             int not null,
+    `id`             int not null auto_increment,
     `parent_id`      int,
     `menu_name`      varchar(11),
     `menu_path`      varchar(11),
@@ -48,7 +48,7 @@ create table t_menu
 
 create table t_role_menu
 (
-    `id`      int not null,
+    `id`      int not null auto_increment,
     `role_id` int,
     `menu_id` int,
     primary key (`id`),

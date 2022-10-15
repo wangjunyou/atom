@@ -12,8 +12,7 @@ import 'nprogress/nprogress.css'
 
 const router = createRouter({
     history: createWebHistory(
-        'atom/ui'
-        // import.meta.env.MODE === 'production' ? 'atom/ui' : '/atom/ui'
+        import.meta.env.MODE === 'production' ? 'atom/ui' : '/'
     ),
     routes
 })

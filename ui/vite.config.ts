@@ -6,7 +6,7 @@ import viteCompression from 'vite-plugin-compression'
 const path = require('path')
 
 export default defineConfig({
-    base: "/atom/ui",
+    base: process.env.NODE_ENV === 'production' ? '/atom/ui/' : '/',
     plugins: [
         vue(),
         vueJsx(),
