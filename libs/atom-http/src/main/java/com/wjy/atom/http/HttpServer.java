@@ -8,6 +8,7 @@ import com.wjy.atom.config.annotation.Config;
 import org.jboss.resteasy.plugins.guice.GuiceResourceFactory;
 import org.jboss.resteasy.plugins.guice.ModuleProcessor;
 import org.jboss.resteasy.plugins.server.netty.NettyJaxrsServer;
+import org.jboss.resteasy.spi.InjectorFactory;
 import org.jboss.resteasy.spi.ResourceFactory;
 import org.jboss.resteasy.spi.ResteasyDeployment;
 import org.jboss.resteasy.util.GetRestful;
@@ -81,6 +82,24 @@ public class HttpServer {
         deployment.setWiderRequestMatching(true);
         deployment.setStatisticsEnabled(true);
 
+        List<Object> providers = new ArrayList<>();
+        List<ResourceFactory> resourceFactories = new ArrayList();
+        Iterator<Binding<?>> bindings = injector.getBindings().values().iterator();
+        while (bindings.hasNext()) {
+            Binding<?> binding = bindings.next();
+            Class<?> beanClass = binding.getKey().getTypeLiteral().getRawType();
+            if (beanClass instanceof Class) {
+                if (GetRestful.isRootResource(beanClass)) {
+                    resourceFactories.add(new GuiceResourceFactory(binding.getProvider(), beanClass));
+                }
+                if(beanClass.isAnnotationPresent(Provider.class)){
+                    providers.add(binding.getProvider().get());
+                }
+            }
+        }
+        deployment.setResourceFactories(resourceFactories);
+        deployment.setProviders(providers);
+
         server = new NettyJaxrsServer();
         server.setDeployment(deployment);
 
@@ -92,8 +111,8 @@ public class HttpServer {
         server.setRootResourcePath(path);
         server.start();
 
-        ModuleProcessor processor = new ModuleProcessor(deployment.getRegistry(), deployment.getProviderFactory());
-        processor.processInjector(injector);
+//        ModuleProcessor processor = new ModuleProcessor(deployment.getRegistry(), deployment.getProviderFactory());
+//        processor.processInjector(injector);
 
     }
 

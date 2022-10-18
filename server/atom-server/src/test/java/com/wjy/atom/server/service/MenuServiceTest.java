@@ -21,7 +21,7 @@ public class MenuServiceTest {
 
     @Test
     public void selectMenuById() {
-        Menu menu = menuService.selectById(1);
+        Menu menu = menuService.selectById(2);
         System.out.println(menu.toString());
     }
 

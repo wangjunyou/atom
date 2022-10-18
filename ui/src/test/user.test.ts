@@ -27,5 +27,6 @@ test('user', () => {
 })
 
 test('demo', () => {
+    console.log(import.meta.env.MODE);
     console.log(import.meta.env.VITE_APP_PROD_WEB_URL);
 })

@@ -5,7 +5,7 @@ import qs from 'qs'
 
 const requestConfig: AxiosRequestConfig = {
    baseURL:
-        import.meta.env.MODE === 'development'
+        import.meta.env.MODE === 'production'
             ? import.meta.env.VITE_APP_DEV_WEB_URL + '/atom/api'
             : import.meta.env.VITE_APP_DEV_WEB_URL + '/atom/api',
     timeout: 15000,

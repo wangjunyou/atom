@@ -8,7 +8,7 @@ create table t_user
     `create_time`   datetime,
     `update_time`   datetime,
     primary key (`id`)
-)
+);
 
 create table t_role
 (
@@ -19,7 +19,7 @@ create table t_role
     `create_time` datetime,
     `update_time` datetime,
     primary key (`id`)
-)
+);
 
 create table t_user_role
 (
@@ -28,7 +28,7 @@ create table t_user_role
     `role_id` int,
     primary key (`id`),
     UNIQUE KEY `un_user_role_inx` (`user_id`,`role_id`)
-)
+);
 
 create table t_menu
 (
@@ -44,7 +44,7 @@ create table t_menu
 	`create_time` datetime,
 	`update_time` datetime,
 	primary key (`id`)
-)
+);
 
 create table t_role_menu
 (
@@ -53,7 +53,7 @@ create table t_role_menu
     `menu_id` int,
     primary key (`id`),
     unique key `un_role_menu_inx` (`role_id`,`menu_id`)
-)
+);
 
 
 

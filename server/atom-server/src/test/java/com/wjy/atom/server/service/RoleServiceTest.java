@@ -21,7 +21,7 @@ public class RoleServiceTest {
 
     @Test
     public void selectRoleById() {
-        Role role = roleService.selectById(1);
+        Role role = roleService.selectById(2);
         System.out.println(role.toString());
     }
 
